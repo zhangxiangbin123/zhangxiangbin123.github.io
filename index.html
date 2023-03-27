@@ -1,43 +1,161 @@
 <!DOCTYPE html>
-<table border="1">
-</table>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Github Page demo</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="index.js"></script>
+    <meta charset="UTF-8">
+    <title>王de狗窝</title>
+    <style>
+        body {
+            background-color: #0C2340;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: scroll;
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .header {
+            padding: 50px 0;
+            text-align: center;
+        }
+        .name {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .title {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 40px;
+        }
+        .content {
+            margin: 0 20%;
+            text-align: justify;
+            line-height: 1.5;
+        }
+        h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-top: 50px;
+            margin-bottom: 20px;
+        }
+        .skill {
+            display: inline-block;
+            padding: 5px 10px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #fff;
+            border-radius: 5px;
+        }
+    </style>
 </head>
-<body background = "https://img1.baidu.com/it/u=2087780157,2406151785&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=313" style="background-size:100%;background-attachment: fixed;">
-	<tr>
-	<center>
-	<h1>王de狗窝</h1>
-	<h1>HOUSE OF KING</h1>
-	</center>
-</tr>
-<p>Hello 大家好</p>
-<hr />
-<p>I`m 张祥斌，you can call me 小张！ </p>
-<hr />
-<p>很高兴你来到王的地盘, 在这里必须对我俯首称臣，哈哈哈哈哈哈哈！</p>
-<hr />
-    <div id="main-content">
-
+<body>
+    <canvas id="canvas"></canvas>
+    <div class="header">
+        <div class="name">王de狗窝</div>
+        <div class="title">HOUSE OF KING</div>
     </div>
-
-<p><b>王的恩赐：</b> 动动你可爱的小手手，看看我给你备的大礼吧！哈哈哈哈呵呵</p>
-	<td>
-<ul>
-  <li> <a href="https://zhangxiangbin123.github.io/birthday">生日快乐，小贼</a> </li>
-  <li> <a href="https://zhangxiangbin123.github.io/LoveTree">王的LOVE TREE</a> </li>
-  <li> <a href="https://zhangxiangbin123.github.io/loveBalloon">告白球球</a> </li>
-</ul>
-</td>
-<p><a href="https://zhangxiangbin123.github.io/home-page-butterflies">几只小蝴蝶</a></p>
-<p><a href="https://zhangxiangbin123.github.io">张祥斌的网站.COM</a></p>
-
+    <div class="content">
+        <h2>王的信息</h2>
+        <p>1998年出生，本科毕业于昆明理工大学Computer Science And Techiclnology专业。</p>
+        <p>电话：15187842845</p>
+        <p>邮箱：27591415482@qq.com</p>
+        <h2>王的恩赐</h2><br />
+        <p>动动你可爱的小手手，看看我给你备的大礼吧！哈哈哈哈呵呵</p>
+        <ul>
+        <li> <a href="https://zhangxiangbin123.github.io/birthday">生日快乐，小贼</a> </li>
+        <li> <a href="https://zhangxiangbin123.github.io/LoveTree">王的LOVE TREE</a> </li>
+        <li> <a href="https://zhangxiangbin123.github.io/loveBalloon">告白球球</a> </li>
+        </ul>
+        </td>
+        <p><a href="https://zhangxiangbin123.github.io/home-page-butterflies">几只小蝴蝶</a></p>
+        <p><a href="https://zhangxiangbin123.github.io">张祥斌的网站.COM</a></p>
+        <h2>技能清单</h2>
+        <div class="skill">HTML/CSS</div>
+        <div class="skill">篮球</div>
+        <div class="skill">王者荣耀</div>
+        <div class="skill">动漫</div>
+        <div class="skill">Java</div>
+    </div>
+    <script>
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        var W = window.innerWidth;
+        var H = window.innerHeight;
+        canvas.width = W;
+        canvas.height = H;
+        var particles = [];
+        var mouse = {};
+        window.addEventListener('mousemove', function(e) {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+        function Particle(x, y) {
+            this.x = x;
+            this.y = y;
+            this.size = Math.random() * 5 + 1;
+            this.speed = Math.random() * 5 + 1;
+            this.angle = Math.floor(Math.random() * 360);
+            this.color = {
+                r: Math.floor(Math.random() * 256),
+                g: Math.floor(Math.random() * 256),
+                b: Math.floor(Math.random() * 256),
+                a: Math.random()
+            };
+            this.move = function() {
+                var radians = this.angle * Math.PI / 180;
+                this.x += Math.cos(radians) * this.speed;
+                this.y += Math.sin(radians) * this.speed;
+            };
+            this.draw = function() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(' + this.color.r + ', ' + this.color.g + ', ' + this.color.b + ', ' + this.color.a + ')';
+                ctx.fill();
+            };
+        }
+        function createParticles() {
+            for (var i = 0; i < 50; i++) {
+                var particle = new Particle(Math.random() * W, Math.random() * H);
+                particles.push(particle);
+            }
+        }
+        function drawParticles() {
+            ctx.clearRect(0, 0, W, H);
+            ctx.globalCompositeOperation = 'lighter';
+            for (var i = 0; i < particles.length; i++) {
+                var particle = particles[i];
+                particle.move();
+                particle.draw();
+                if (particle.x > W || particle.x < 0 || particle.y > H || particle.y < 0) {
+                    particles.splice(i, 1);
+                    i--;
+                }
+            }
+            for (var i = 0; i < particles.length; i++) {
+                var particle1 = particles[i];
+                for (var j = i + 1; j < particles.length; j++) {
+                    var particle2 = particles[j];
+                    var distance = Math.sqrt(Math.pow((particle1.x - particle2.x), 2) + Math.pow((particle1.y - particle2.y), 2));
+                    if (distance < 50) {
+                        ctx.beginPath();
+                        ctx.moveTo(particle1.x, particle1.y);
+                        ctx.lineTo(particle2.x, particle2.y);
+                        ctx.strokeStyle = 'rgba(' + particle1.color.r + ', ' + particle1.color.g + ', ' + particle1.color.b + ', ' + ((50 - distance) / 50) + ')';
+                        ctx.stroke();
+                    }
+                }
+            }
+            window.requestAnimationFrame(drawParticles);
+        }
+        createParticles();
+        drawParticles();
+    </script>
 </body>
-	
 </html>
